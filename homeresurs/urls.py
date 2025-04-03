@@ -21,4 +21,5 @@ from resurses import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
+    path('counters/', views.counters),
 ]

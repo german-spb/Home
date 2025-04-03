@@ -2,24 +2,6 @@ body {
  background-color: #F1F6FF
  }
 
-.container {
-            text-align: center;
-            margin: 100px auto;
-            max-width: 400px;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-        }
-
-        h1 {
-            color: green;
-            font-weight: bold;
-        }
-
-        img {
-            width: 60%;
-        }
 @import url('https://fonts.googleapis.com/css?family=PT+Sans');
 .top-menu {
   position: relative;
@@ -83,11 +65,4 @@ body {
 }
 @media (max-width: 500px) {
   .menu-main li {display: block;}
-}
-
-footer {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  text-align: center;
 }

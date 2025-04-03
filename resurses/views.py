@@ -7,3 +7,6 @@ from .models import *
 
 def home(request):
     return render(request, 'home.html')
+
+def counters(request):
+    return render(request, 'counters.html'                  )
