@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Показания счётчиков</title>
+    {% load static %}
+    <link href="{% static 'css/list_counters.css' %}" rel="stylesheet"/>
+</head>
+<body>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Год</th>
+                    <th>Месяц</th>
+                    <th>Элек-во/день</th>
+                    <th>Расход</th>
+                    <th>Элек-во/ночь</th>
+                    <th>Расход</th>
+                    <th>Вода</th>
+                    <th>Расход</th>
+                    <th>Газ</th>
+                    <th>Расход</th>
+                </tr>
+            </thead>
+	        <tbody>
+                {% for coun in counters %}
+                <tr>
+                    <td>{{ coun.year }}</td>
+                    <td>{{ coun.month }}</td>
+                    <td>{{ coun.elec_day }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ coun.elec_night }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ coun.water }}</td>
+                    <td>{{ 0 }}</td>
+                    <td>{{ coun.gas }}</td>
+                    <td>{{ 0 }}</td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+</body>
+</html>

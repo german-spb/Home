@@ -12,65 +12,45 @@
         <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
             {% csrf_token %}  <!-- CSRF token for security -->
 
-            <!-- Registration form heading -->
             <h1 style="text-align: center;"><span style="color: green;">Cozi Corner</span></h1>
             <h3>Ввод показаний счетчиков</h3>
             <hr>
 
-            <!-- Display error/success messages -->
-<!--            {% if messages %}-->
-<!--            <div class="alert alert-primary" role="alert">-->
-<!--                {% for message in messages %}-->
-<!--                {{ message }}-->
-<!--                {% endfor %}-->
-<!--            </div>-->
-<!--            {% endif %}-->
-
             <!-- Year input field -->
             <div class="form-group">
-                <label for="inputYear">Год</label>
-                <input type="number" class="form-control" id="inputYear" aria-describedby="year"
-                    placeholder="Введите год" name="year" required>
+                <label for="year" class="form-label">Год</label>
+                <input type="text" name="year" class="form-control" id="year" placeholder="Введите год" required>
             </div>
 
             <!-- Month input field -->
             <div class="form-group">
-                <label for="inputMonth">Месяц</label>
-                <input type="text" name="month" class="form-control" id="inputMonth"
-                    aria-describedby="month" placeholder="Введите месяц" required>
+                <label for="month" class="form-label">Месяц</label>
+                <input type="text" name="month" class="form-control" id="month" placeholder="Введите месяц" required>
             </div>
 
             <!-- Elec_day input field -->
             <div class="form-group">
-                <label for="elec_day">Электричество День</label>
-                <input type="number" class="form-control" name="elec_day" id="elec_day"
-                    aria-describedby="elec_day" placeholder="Показания День" required>
+                <label for="elec_day" class="form-label">Электричество День</label>
+                <input type="number" class="form-control" name="elec_day" id="elec_day" placeholder="Показания День" required>
             </div>
 
             <!-- Elec_night input field -->
             <div class="form-group">
-                <label for="elec_night">Электричество Ночь</label>
-                <input type="number" class="form-control" name="elec_night" id="elec_night"
-                    aria-describedby="elec_night" placeholder="Показания Ночь" required>
+                <label for="elec_night" class="form-label">Электричество Ночь</label>
+                <input type="number" class="form-control" name="elec_night" id="elec_night" placeholder="Показания Ночь" required>
             </div>
 
             <!-- Water input field -->
             <div class="form-group">
-                <label for="water">Вода</label>
-                <input type="number" class="form-control" name="water" id="water"
-                    placeholder="Холодная вода" required>
+                <label for="water" class="form-label">Вода</label>
+                <input type="number" class="form-control" name="water" id="water" placeholder="Холодная вода" required>
             </div>
 
             <!-- Gas input field -->
             <div class="form-group">
                 <label for="gas">Газ</label>
-                <input type="number" class="form-control" name="gas" id="gas"
-                    placeholder="Газ" required>
+                <input type="number" class="form-control" name="gas" id="gas" placeholder="Газ" required>
             </div>
-
-
-            <!-- Link to login page for users who already have an account -->
-<!--            <p>Already have an account <a href="/login/">Login</a> </p>-->
 
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary">Отправить</button>

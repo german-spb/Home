@@ -1,10 +1,17 @@
+from calendar import month
+
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm
+from .forms import LoginForm, RegisterForm, CountersForm
+from django.views.generic.edit import FormView, CreateView
+from django.views.generic import TemplateView
+from django.urls import reverse_lazy
+
 
 @login_required
 def home(request):
@@ -81,4 +88,45 @@ def logout_view(request):
     return redirect('login')
 
 def input_date(request):
-    return render(request, 'input_date.html'                  )
+    form = CountersForm()
+    return render(request, 'input_date.html', {'form': form})
+
+# --------- Запись данных в БД из формы-----------------
+class SuccessView(TemplateView):
+    template_name = 'success.html'
+
+class CountersFormView(FormView):
+    form_class = CountersForm
+    template_name = 'input_date.html'
+    success_url = reverse_lazy('success')
+
+    def form_valid(self, form):
+     month = self.request.POST.get('month')
+     is_month = Counters.objects.filter(month=month).exists()
+     if is_month:
+         return HttpResponse(f'Показания счетчиков за {month} уже есть в базе!')
+     else:
+         input = form.save()
+         return super().form_valid(form)
+
+    def form_invalid(self, form):
+        for field, errors in form.errors.items():
+            for error in errors:
+                messages.error(self.request, f'В поле {field} возникла ошибка: {error}')
+        return super().form_invalid(form)
+
+
+# -------------- извлечение из БД --------------
+def list_counters(request):
+    counters = Counters.objects.order_by('-month')
+    # wat = {'wat0': 0,
+    #         'wat1': counters[1].water - counters[0].water,
+    #         'wat2': counters[2].water - counters[1].water,
+    #         }
+    # print(counters[2].water - counters[1].water)
+
+    return render(request, 'list_counters.html', {'counters': counters})
+
+def all_delete (request):
+    Counters.objects.all().delete()
+    return HttpResponse('Все записи удалены')

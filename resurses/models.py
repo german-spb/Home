@@ -9,3 +9,6 @@ class Counters(models.Model):
     elec_night = models.IntegerField()
     water = models.IntegerField()
     gas = models.IntegerField()
+
+    class Meta:
+        unique_together = ('year', 'month')

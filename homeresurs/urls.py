@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from resurses import views
+from resurses.views import CountersFormView, SuccessView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -25,5 +26,8 @@ urlpatterns = [
     path('login/', views.login_page, name='login'),
     path('register/', views.register_page, name='register'),
     path('logout/', views.logout_view, name='logout'),
-    path('input_date/', views.input_date),
+    path('input_date/', CountersFormView.as_view(), name='input_date'),
+    path('success/', SuccessView.as_view(), name='success'),
+    path('list_counters/', views.list_counters),
+    path('delete/', views.all_delete),
 ]
