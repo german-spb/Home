@@ -1,5 +1,4 @@
 from calendar import month
-
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -101,13 +100,25 @@ class CountersFormView(FormView):
     success_url = reverse_lazy('success')
 
     def form_valid(self, form):
-     month = self.request.POST.get('month')
-     is_month = Counters.objects.filter(month=month).exists()
-     if is_month:
-         return HttpResponse(f'Показания счетчиков за {month} уже есть в базе!')
-     else:
-         input = form.save()
-         return super().form_valid(form)
+     elec_day = self.request.POST.get('elec_day')
+     elec_night = self.request.POST.get('elec_night')
+     water = self.request.POST.get('water')
+     gas = self.request.POST.get('gas')
+     last_counter_elec_day = Counters.objects.order_by('elec_day').last()
+     last_counter_elec_night = Counters.objects.order_by('elec_night').last()
+     last_counter_water = Counters.objects.order_by('water').last()
+     last_counter_gas = Counters.objects.order_by('gas').last()
+     outgo_elec_day = int(elec_day) - last_counter_elec_day.elec_day
+     outgo_elec_night = int(elec_night) - last_counter_elec_night.elec_night
+     outgo_water = int(water) - last_counter_water.water
+     outgo_gas = int(gas) - last_counter_gas.gas
+     # outgo_elec_day = elec_day
+     # outgo_elec_night = elec_night
+     # outgo_water = water
+     # outgo_gas = gas
+
+     form.save()
+     return super().form_valid(form)
 
     def form_invalid(self, form):
         for field, errors in form.errors.items():

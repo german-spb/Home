@@ -11,7 +11,13 @@
 
         <form class="col-6 mx-auto card p-3 shadow-lg" method="post" enctype="multipart/form-data">
             {% csrf_token %}  <!-- CSRF token for security -->
-
+            {% if messages %}
+                <ul class="list-unstyled">
+                {% for message in messages %}
+                <li{% if message.tags %} class="text-danger"{% endif %}>{{ message }}</li>
+                {% endfor %}
+                </ul>
+            {% endif %}
             <h1 style="text-align: center;"><span style="color: green;">Cozi Corner</span></h1>
             <h3>Ввод показаний счетчиков</h3>
             <hr>

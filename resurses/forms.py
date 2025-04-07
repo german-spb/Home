@@ -18,7 +18,7 @@ class RegisterForm(UserCreationForm):
 class CountersForm(forms.ModelForm):
     class Meta:
         model = Counters
-        fields = '__all__'
+        fields = ['year', 'month', 'elec_day', 'outgo_elec_day', 'elec_night', 'outgo_elec_night', 'water', 'outgo_water', 'gas', 'outgo_gas']
         labels = {
             'year': 'Год',
             'month': 'Месяц',
@@ -26,6 +26,7 @@ class CountersForm(forms.ModelForm):
             'elec_night': 'Электричество Ночь',
             'water': 'Холодная вода',
             'gas': 'Газ',
+
         }
     def __init__(self, *args, **kwargs):
         super(CountersForm, self).__init__(*args, **kwargs)
