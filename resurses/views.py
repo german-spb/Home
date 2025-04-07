@@ -100,6 +100,7 @@ class CountersFormView(FormView):
     success_url = reverse_lazy('success')
 
     def form_valid(self, form):
+     month = self.request.POST.get('month')
      elec_day = self.request.POST.get('elec_day')
      elec_night = self.request.POST.get('elec_night')
      water = self.request.POST.get('water')
@@ -116,8 +117,9 @@ class CountersFormView(FormView):
      # outgo_elec_night = elec_night
      # outgo_water = water
      # outgo_gas = gas
-
      form.save()
+     values_for_update = {'outgo_elec_day': outgo_elec_day, 'outgo_elec_night': outgo_elec_night, 'outgo_water': outgo_water, 'outgo_gas': outgo_gas}
+     Counters.objects.update_or_create(month=month, defaults=values_for_update)
      return super().form_valid(form)
 
     def form_invalid(self, form):
