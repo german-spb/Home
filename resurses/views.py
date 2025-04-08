@@ -18,6 +18,9 @@ def home(request):
 @login_required
 def counters(request):
     return render(request, 'counters.html')
+@login_required
+def documents(request):
+    return render(request, 'documents.html')
 
 
 def login_page(request):
@@ -100,26 +103,31 @@ class CountersFormView(FormView):
     success_url = reverse_lazy('success')
 
     def form_valid(self, form):
-     month = self.request.POST.get('month')
+# ------ получаем данные из формы ввода показаний счетчиков -------------------------------
      elec_day = self.request.POST.get('elec_day')
      elec_night = self.request.POST.get('elec_night')
      water = self.request.POST.get('water')
      gas = self.request.POST.get('gas')
+# ----- если в БД нет ни одной записи, то "else" -------------------------------------------
      last_counter_elec_day = Counters.objects.order_by('elec_day').last()
-     last_counter_elec_night = Counters.objects.order_by('elec_night').last()
-     last_counter_water = Counters.objects.order_by('water').last()
-     last_counter_gas = Counters.objects.order_by('gas').last()
-     outgo_elec_day = int(elec_day) - last_counter_elec_day.elec_day
-     outgo_elec_night = int(elec_night) - last_counter_elec_night.elec_night
-     outgo_water = int(water) - last_counter_water.water
-     outgo_gas = int(gas) - last_counter_gas.gas
-     # outgo_elec_day = elec_day
-     # outgo_elec_night = elec_night
-     # outgo_water = water
-     # outgo_gas = gas
+     if last_counter_elec_day:
+         last_counter_elec_night = Counters.objects.order_by('elec_night').last()
+         last_counter_water = Counters.objects.order_by('water').last()
+         last_counter_gas = Counters.objects.order_by('gas').last()
+         outgo_elec_day = int(elec_day) - last_counter_elec_day.elec_day
+         outgo_elec_night = int(elec_night) - last_counter_elec_night.elec_night
+         outgo_water = int(water) - last_counter_water.water
+         outgo_gas = int(gas) - last_counter_gas.gas
+     else:
+         outgo_elec_day = elec_day
+         outgo_elec_night = elec_night
+         outgo_water = water
+         outgo_gas = gas
      form.save()
+# ------------ берем последнюю запись в БД для определения ее id (objects.id) -------------------
+     objects = Counters.objects.all().last()
      values_for_update = {'outgo_elec_day': outgo_elec_day, 'outgo_elec_night': outgo_elec_night, 'outgo_water': outgo_water, 'outgo_gas': outgo_gas}
-     Counters.objects.update_or_create(month=month, defaults=values_for_update)
+     Counters.objects.update_or_create(id=objects.id, defaults=values_for_update)
      return super().form_valid(form)
 
     def form_invalid(self, form):
@@ -131,13 +139,7 @@ class CountersFormView(FormView):
 
 # -------------- извлечение из БД --------------
 def list_counters(request):
-    counters = Counters.objects.order_by('-month')
-    # wat = {'wat0': 0,
-    #         'wat1': counters[1].water - counters[0].water,
-    #         'wat2': counters[2].water - counters[1].water,
-    #         }
-    # print(counters[2].water - counters[1].water)
-
+    counters = Counters.objects.order_by('year')
     return render(request, 'list_counters.html', {'counters': counters})
 
 def all_delete (request):

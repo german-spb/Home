@@ -20,9 +20,9 @@
                 <tr>
                     <th>Год</th>
                     <th>Месяц</th>
-                    <th>Элек-во/день</th>
+                    <th>Эл./день</th>
                     <th>Расход</th>
-                    <th>Элек-во/ночь</th>
+                    <th>Эл./ночь</th>
                     <th>Расход</th>
                     <th>Вода</th>
                     <th>Расход</th>
@@ -36,13 +36,13 @@
                     <td>{{ coun.year }}</td>
                     <td>{{ coun.month }}</td>
                     <td>{{ coun.elec_day }}</td>
-                    <td>{{ coun.outgo_elec_day }}</td>
+                    <td class="out">{{ coun.outgo_elec_day }}</td>
                     <td>{{ coun.elec_night }}</td>
-                    <td>{{ coun.outgo_elec_night }}</td>
+                    <td class="out">{{ coun.outgo_elec_night }}</td>
                     <td>{{ coun.water }}</td>
-                    <td>{{ coun.outgo_water }}</td>
+                    <td class="out">{{ coun.outgo_water }}</td>
                     <td>{{ coun.gas }}</td>
-                    <td>{{ coun.outgo_gas }}</td>
+                    <td class="out">{{ coun.outgo_gas }}</td>
                 </tr>
                 {% endfor %}
 
