@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from resurses import views
+from django.conf import settings
+from django.conf.urls.static import static
 from resurses.views import CountersFormView, SuccessView
 
 urlpatterns = [
@@ -24,6 +26,7 @@ urlpatterns = [
     path('home/', views.home),
     path('counters/', views.counters),
     path('documents/', views.documents),
+    path('documents_home/', views.documents_home_upload),
     path('login/', views.login_page, name='login'),
     path('register/', views.register_page, name='register'),
     path('logout/', views.logout_view, name='logout'),
@@ -32,3 +35,6 @@ urlpatterns = [
     path('list_counters/', views.list_counters),
     path('delete/', views.all_delete),
 ]
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

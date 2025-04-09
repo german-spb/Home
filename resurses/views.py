@@ -6,7 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm, CountersForm
+from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic import TemplateView
 from django.urls import reverse_lazy
@@ -15,12 +15,30 @@ from django.urls import reverse_lazy
 @login_required
 def home(request):
     return render(request, 'home.html')
+
 @login_required
 def counters(request):
     return render(request, 'counters.html')
+
 @login_required
 def documents(request):
     return render(request, 'documents.html')
+
+@login_required
+def documents_home_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj = form.instance
+            return render(request, 'documents_home.html', {'form': form, 'img_obj': img_obj})
+    else:
+        form = DocumentForm()
+    return render(request, 'documents_home.html', {'form': form})
+
+def documents_views(request):
+    documents = Document.objects.all()
+    return render(request, 'documents_home.html', {'documents': documents})
 
 
 def login_page(request):

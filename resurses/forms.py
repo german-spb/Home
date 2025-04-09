@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm
-from resurses.models import Counters
+from resurses.models import Counters, Document
 
 class LoginForm(forms.Form):
     username = forms.CharField(label='Username')
@@ -33,3 +33,11 @@ class CountersForm(forms.ModelForm):
 
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'form-control form-label'})
+
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ('title', 'document')
+        labels = {
+            'title': 'Введите название'
+        }
