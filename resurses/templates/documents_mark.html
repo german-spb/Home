@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Документы "Марк"</title>
+    {% load static %}
+    <link href="{% static 'css/counters.css' %}" rel="stylesheet"/>
+</head>
+<body>
+<form method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+   {{ form.as_p }}
+  <button type="submit">Upload</button>
+</form>
+{% if img_obj %}
+  <h3>Успешно загружено: {{img_obj.title}}</h3>
+  <img src="{{ img_obj.image.url}}" alt="connect" style="max-height:300px">
+{% endif %}
+<h3 align="center">Документы "Марк"</h3>
+    <nav class="top-menu">
+      <ul class="menu-main">
+        <li><a href="/documents" >Дом</a></li>
+        <li><a href="/documents_german" >Герман</a></li>
+        <li><a href="/documents_irina">Ирина</a></li>
+        <li><a href="/documents_mark" class="current">Марк</a></li>
+        <li><a href="/home">В начало</a></li>
+      </ul>
+    </nav>
+</body>
+</html>
