@@ -1,4 +1,3 @@
-from calendar import month
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -22,24 +21,48 @@ def counters(request):
 
 @login_required
 def documents(request):
-    return render(request, 'documents.html')
-
-@login_required
-def documents_home_upload(request):
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            return render(request, 'documents_home.html', {'form': form, 'img_obj': img_obj})
+            return render(request, 'documents.html', {'form': form, 'img_obj': img_obj})
     else:
         form = DocumentForm()
-    return render(request, 'documents_home.html', {'form': form})
+    return render(request, 'documents.html', {'form': form})
 
-def documents_views(request):
-    documents = Document.objects.all()
-    return render(request, 'documents_home.html', {'documents': documents})
+def documents_german_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj = form.instance
+            return render(request, 'documents_german.html', {'form': form, 'img_obj': img_obj})
+    else:
+        form = DocumentForm()
+    return render(request, 'documents_german.html', {'form': form})
 
+def documents_irina_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj = form.instance
+            return render(request, 'documents_irina.html', {'form': form, 'img_obj': img_obj})
+    else:
+        form = DocumentForm()
+    return render(request, 'documents_irina.html', {'form': form})
+
+def documents_mark_upload(request):
+    if request.method == 'POST':
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj = form.instance
+            return render(request, 'documents_mark.html', {'form': form, 'img_obj': img_obj})
+    else:
+        form = DocumentForm()
+    return render(request, 'documents_mark.html', {'form': form})
 
 def login_page(request):
     # Check if the HTTP request method is POST (form submission)
@@ -107,9 +130,9 @@ def logout_view(request):
     logout(request)
     return redirect('login')
 
-def input_date(request):
-    form = CountersForm()
-    return render(request, 'input_date.html', {'form': form})
+# def input_date(request):
+#     form = CountersForm()
+#     return render(request, 'input_date.html', {'form': form})
 
 # --------- Запись данных в БД из формы-----------------
 class SuccessView(TemplateView):
