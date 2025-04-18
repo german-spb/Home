@@ -21,26 +21,28 @@ def counters(request):
 
 @login_required
 def documents(request):
-    if request.method == 'POST':
+   owner = Document.objects.filter(owner='Дом')
+   if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            return render(request, 'documents.html', {'form': form, 'img_obj': img_obj})
-    else:
+            return render(request, 'documents.html', {'form': form, 'img_obj': img_obj, 'owner': owner})
+   else:
         form = DocumentForm()
-    return render(request, 'documents.html', {'form': form})
+        return render(request, 'documents.html', {'form': form, 'owner': owner})
 
 def documents_german_upload(request):
+    owner = Document.objects.filter(owner='Герман')
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            return render(request, 'documents_german.html', {'form': form, 'img_obj': img_obj})
+            return render(request, 'documents_german.html', {'form': form, 'img_obj': img_obj, 'owner': owner})
     else:
         form = DocumentForm()
-    return render(request, 'documents_german.html', {'form': form})
+    return render(request, 'documents_german.html', {'form': form, 'owner': owner})
 
 def documents_irina_upload(request):
     if request.method == 'POST':
@@ -63,6 +65,13 @@ def documents_mark_upload(request):
     else:
         form = DocumentForm()
     return render(request, 'documents_mark.html', {'form': form})
+
+
+# def view_documents(request):
+#     # owner = request.POST.get('owner')
+#     documents_obj = Document.objects.all()
+#     return render(request, 'documents.html', {'documents_obj': documents_obj})
+#
 
 def login_page(request):
     # Check if the HTTP request method is POST (form submission)
@@ -186,3 +195,8 @@ def list_counters(request):
 def all_delete (request):
     Counters.objects.all().delete()
     return HttpResponse('Все записи удалены')
+
+# ------------ Удаление файлов------------------
+def delete_documents(request):
+    Document.objects.all().delete()
+    return HttpResponse('Все файлы удалены')

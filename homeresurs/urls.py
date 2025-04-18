@@ -26,6 +26,7 @@ urlpatterns = [
     path('home/', views.home),
     path('counters/', views.counters),
     path('documents/', views.documents),
+    # path('documents/', views.view_documents),
     path('documents_german/', views.documents_german_upload),
     path('documents_irina/', views.documents_irina_upload),
     path('documents_mark/', views.documents_mark_upload),
@@ -36,6 +37,7 @@ urlpatterns = [
     path('success/', SuccessView.as_view(), name='success'),
     path('list_counters/', views.list_counters),
     path('delete/', views.all_delete),
+    path('delete_documents/', views.delete_documents),
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

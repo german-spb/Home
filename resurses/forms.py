@@ -37,7 +37,8 @@ class CountersForm(forms.ModelForm):
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
-        fields = ('title', 'document')
+        fields = ('title', 'owner', 'document')
         labels = {
-            'title': 'Введите название'
+            'title': 'Название документа',
+            'owner': 'Собственник документа'
         }

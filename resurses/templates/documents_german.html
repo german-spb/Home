@@ -27,5 +27,14 @@
         <li><a href="/home">В начало</a></li>
       </ul>
     </nav>
+<ul>
+    {% for image in owner %}
+        <li>
+            <h3> {{ image.title }}</h3>
+            <img src = " {{ image.document.url }}" alt="{{ image.title }}" width="300">
+            <a href="{{ image.document }}">Документ</a>
+        </li>
+    {% endfor %}
+</ul>
 </body>
 </html>
