@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from resurses.views import CountersFormView, SuccessView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
@@ -28,6 +29,7 @@ urlpatterns = [
     path('documents/', views.documents),
     # path('documents/', views.view_documents),
     path('documents_german/', views.documents_german_upload),
+    path('documents_german/<int:file_id>/', views.document_view),
     path('documents_irina/', views.documents_irina_upload),
     path('documents_mark/', views.documents_mark_upload),
     path('login/', views.login_page, name='login'),
