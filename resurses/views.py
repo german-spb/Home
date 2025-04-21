@@ -46,10 +46,11 @@ def documents_german_upload(request):
 
 def document_view(request, file_id):
     file_record = Document.objects.get(id=file_id)
-    # response = HttpResponse(file_record.document, content_type='application/octet-stream')
-    # response['Content-Disposition'] = f'attachment; filename="{file_record.title}"'
-    # return response
     return render(request, 'view.html', {'file_record' : file_record})
+
+def document_delete(request, file_id):
+    Document.objects.get(id=file_id).delete()
+    return redirect('/documents_german/')
 
 
 def documents_irina_upload(request):
