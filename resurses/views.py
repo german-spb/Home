@@ -5,10 +5,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm
+from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, PayDataForm
 from django.views.generic.edit import FormView, CreateView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+import datetime
+
 
 
 @login_required
@@ -51,6 +53,10 @@ def document_view(request, file_id):
 def document_delete(request, file_id):
     Document.objects.get(id=file_id).delete()
     return redirect('/documents_german/')
+
+def delete(request, file_id):
+    file = Document.objects.get(id=file_id)
+    return render(request, 'document_delete.html', {'file': file})
 
 
 def documents_irina_upload(request):
@@ -199,7 +205,17 @@ class CountersFormView(FormView):
 # -------------- извлечение из БД --------------
 def list_counters(request):
     counters = Counters.objects.order_by('year')
-    return render(request, 'list_counters.html', {'counters': counters})
+    data_pay = PayData.objects.all()
+    form = PayDataForm()
+    print(data_pay)
+    return render(request, 'list_counters.html', {'counters': counters, 'form': form, 'data': data_pay})
+
+def create_data_pay(request):
+    data_pay = request.POST.get('pay_date')
+    date = PayData(pay_date=data_pay)
+    date.save()
+    print(date.datetime.time)
+    return HttpResponse('Дата записана')
 
 def all_delete (request):
     Counters.objects.all().delete()
@@ -209,3 +225,9 @@ def all_delete (request):
 def delete_documents(request):
     Document.objects.all().delete()
     return HttpResponse('Все файлы удалены')
+
+
+# def pay_data_input(request):
+#     context = {}
+#     context['form'] = PayDataForm()
+#     return render(request, 'list_counters.html', context)

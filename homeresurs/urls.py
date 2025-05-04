@@ -30,7 +30,8 @@ urlpatterns = [
     # path('documents/', views.view_documents),
     path('documents_german/', views.documents_german_upload, name='german'),
     path('documents_german/<int:file_id>/', views.document_view),
-    path('documents_german_delete/<int:file_id>/', views.document_delete),
+    path('documents_german_delete/<int:file_id>/', views.document_delete, name='document_delete'),
+    # path('documents_german_delete/<int:file_id>/', DocumentDeleteView.as_view(), name='delete_document'),
     path('documents_irina/', views.documents_irina_upload),
     path('documents_mark/', views.documents_mark_upload),
     path('login/', views.login_page, name='login'),
@@ -39,8 +40,11 @@ urlpatterns = [
     path('input_date/', CountersFormView.as_view(), name='input_date'),
     path('success/', SuccessView.as_view(), name='success'),
     path('list_counters/', views.list_counters),
-    path('delete/', views.all_delete),
+    path('list_counters/list_counters_date_pay/', views.create_data_pay),
+    path('delete_all/', views.all_delete),
     path('delete_documents/', views.delete_documents),
+    path('delete/<int:file_id>/', views.delete, name='delete'),
+
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL,

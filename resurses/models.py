@@ -27,3 +27,6 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+class PayData(models.Model):
+    pay_date = models.DateField()

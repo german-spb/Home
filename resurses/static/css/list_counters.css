@@ -43,3 +43,11 @@ td:nth-child(2){
 .out {
     background: #f3ece1;
 }
+
+.gas {
+    background: #547f71;
+}
+
+#id_pay_date {
+    width: 70px;
+}

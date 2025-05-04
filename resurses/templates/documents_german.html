@@ -14,7 +14,7 @@
 </form>
 
 {% if img_obj %}
-  <h3>Успешно загружено: {{img_obj.title}}</h3>
+  <small>Успешно загружено: {{img_obj.title}}</small>
 
 {% endif %}
 <h3 align="center">Документы "Герман"</h3>
@@ -34,7 +34,11 @@
                     <td>{{ image.title }}</td>
                     <td><img src = "{{ image.document.url }}" alt="{{ image.title }}" width="100"></td>
                     <td><a href="{{ image.id }}">Открыть</a></td>
-                    <td><a href="/documents_german_delete/{{ image.id }}">Удалить</a></td>
+
+                    <td>
+                        <a href="{% url 'delete' image.id %}">Удалить</a>
+                    </td>
+
                 </tr>
             {% endfor %}
             </tbody>
