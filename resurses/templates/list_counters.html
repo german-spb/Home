@@ -26,20 +26,12 @@
                     <th>Расход</th>
                     <th>Вода</th>
                     <th>Расход</th>
-                    <th>Оплачено</th>
-                    <th>Дата</th>
-                    <th></th>
                     <th class="gas">Газ</th>
                     <th class="gas">Расход</th>
-                    <th class="gas">Оплачено</th>
-                    <th class="gas">Дата</th>
-                    <th class="gas"></th>
-
                 </tr>
             </thead>
 	        <tbody>
                 {% for coun in counters %}
-
                 <tr>
                     <td>{{ coun.year }}</td>
                     <td>{{ coun.month }}</td>
@@ -49,28 +41,8 @@
                     <td class="out">{{ coun.outgo_elec_night }}</td>
                     <td>{{ coun.water }}</td>
                     <td class="out">{{ coun.outgo_water }}</td>
-                    <td></td>
-                    <td class="out_data">
-                        <form method="GET">
-                            {% csrf_token %}
-                            {{ form }}
-                    </td>
-                    <td class="out_data">
-                         <input type="submit" value="ОК">
-                        </form>
-                    </td>
                     <td>{{ coun.gas }}</td>
                     <td class="out">{{ coun.outgo_gas }}</td>
-                    <td class="out">{{ data.datatime }}</td>
-                    <td class="out_data">
-                        <form method="POST" action="list_counters_date_pay/">
-                            {% csrf_token %}
-                            {{ form }}
-                    </td>
-                    <td class="out_data">
-                        <input type="submit" value="ОК">
-                        </form>
-                    </td>
                 </tr>
                 {% endfor %}
 

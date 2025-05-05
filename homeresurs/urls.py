@@ -40,7 +40,6 @@ urlpatterns = [
     path('input_date/', CountersFormView.as_view(), name='input_date'),
     path('success/', SuccessView.as_view(), name='success'),
     path('list_counters/', views.list_counters),
-    path('list_counters/list_counters_date_pay/', views.create_data_pay),
     path('delete_all/', views.all_delete),
     path('delete_documents/', views.delete_documents),
     path('delete/<int:file_id>/', views.delete, name='delete'),

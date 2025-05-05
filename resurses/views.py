@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, PayDataForm
+from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -205,17 +205,9 @@ class CountersFormView(FormView):
 # -------------- извлечение из БД --------------
 def list_counters(request):
     counters = Counters.objects.order_by('year')
-    data_pay = PayData.objects.all()
-    form = PayDataForm()
-    print(data_pay)
-    return render(request, 'list_counters.html', {'counters': counters, 'form': form, 'data': data_pay})
+    return render(request, 'list_counters.html', {'counters': counters})
 
-def create_data_pay(request):
-    data_pay = request.POST.get('pay_date')
-    date = PayData(pay_date=data_pay)
-    date.save()
-    print(date.datetime.time)
-    return HttpResponse('Дата записана')
+
 
 def all_delete (request):
     Counters.objects.all().delete()
