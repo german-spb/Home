@@ -27,18 +27,14 @@
         <li><a href="/home">В начало</a></li>
       </ul>
     </nav>
- <table class="u-full-width" border="1" width="80%" cellpadding="10" align="center">
+ <table class="u-full-width" border="1" cellpadding="10" align="center">
             <tbody>
             {% for image in owner %}
                 <tr>
                     <td>{{ image.title }}</td>
                     <td><img src = "{{ image.document.url }}" alt="{{ image.title }}" width="100"></td>
                     <td><a href="{{ image.id }}">Открыть</a></td>
-
-                    <td>
-                        <a href="{% url 'delete' image.id %}">Удалить</a>
-                    </td>
-
+                    <td><a href="{% url 'delete' image.id %}">Удалить</a></td>
                 </tr>
             {% endfor %}
             </tbody>

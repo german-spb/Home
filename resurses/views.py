@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm
+from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, PayDataForm
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
@@ -52,7 +52,7 @@ def document_view(request, file_id):
 
 def document_delete(request, file_id):
     Document.objects.get(id=file_id).delete()
-    return redirect('/documents_german/')
+    return redirect('/documents/')
 
 def delete(request, file_id):
     file = Document.objects.get(id=file_id)
@@ -60,26 +60,28 @@ def delete(request, file_id):
 
 
 def documents_irina_upload(request):
+    owner = Document.objects.filter(owner='Ирина')
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            return render(request, 'documents_irina.html', {'form': form, 'img_obj': img_obj})
+            return render(request, 'documents_irina.html', {'form': form, 'img_obj': img_obj, 'owner': owner})
     else:
         form = DocumentForm()
-    return render(request, 'documents_irina.html', {'form': form})
+    return render(request, 'documents_irina.html', {'form': form, 'owner': owner})
 
 def documents_mark_upload(request):
+    owner = Document.objects.filter(owner='Марк')
     if request.method == 'POST':
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             img_obj = form.instance
-            return render(request, 'documents_mark.html', {'form': form, 'img_obj': img_obj})
+            return render(request, 'documents_mark.html', {'form': form, 'img_obj': img_obj, 'owner': owner})
     else:
         form = DocumentForm()
-    return render(request, 'documents_mark.html', {'form': form})
+    return render(request, 'documents_mark.html', {'form': form, 'owner': owner})
 
 
 # def view_documents(request):
@@ -205,9 +207,17 @@ class CountersFormView(FormView):
 # -------------- извлечение из БД --------------
 def list_counters(request):
     counters = Counters.objects.order_by('year')
-    return render(request, 'list_counters.html', {'counters': counters})
+    data_pay = PayData.objects.all()
+    form = PayDataForm()
+    print(data_pay)
+    return render(request, 'list_counters.html', {'counters': counters, 'form': form, 'data': data_pay})
 
-
+def create_data_pay(request):
+    data_pay = request.POST.get('pay_date')
+    date = PayData(pay_date=data_pay)
+    date.save()
+    print(date.datetime.time)
+    return HttpResponse('Дата записана')
 
 def all_delete (request):
     Counters.objects.all().delete()

@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm
-from resurses.models import Counters, Document
+from resurses.models import Counters, Document, PayData
 
 
 class LoginForm(forms.Form):
@@ -44,4 +44,11 @@ class DocumentForm(forms.ModelForm):
             'owner': 'Собственник документа'
         }
 
+class PayDataForm(forms.ModelForm):
+    class Meta:
+        model = PayData
+        fields = '__all__'
+        labels = {'pay_date': ''}
+        input_formats = ['%d.%m.%Y']
 
+    # pay_field = forms.DateField(label="", input_formats=['%d.%m.%Y'])

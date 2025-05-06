@@ -66,3 +66,7 @@ body {
 @media (max-width: 500px) {
   .menu-main li {display: block;}
 }
+
+table {
+   width: 50%;
+ }

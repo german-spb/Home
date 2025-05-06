@@ -14,7 +14,7 @@
             {% if messages %}
                 <ul class="list-unstyled">
                 {% for message in messages %}
-                <li{% if message.tags %} class="text-danger"{% endif %}>{{ message }}</li>
+                <li>{% if message.tags %} class="text-danger"{% endif %}>{{ message }}</li>
                 {% endfor %}
                 </ul>
             {% endif %}
@@ -57,6 +57,10 @@
                 <label for="gas">Газ</label>
                 <input type="number" class="form-control" name="gas" id="gas" placeholder="Газ" required>
             </div>
+<!--            <div class="form-group">-->
+<!--                <label for="gas">Оплата</label>-->
+<!--                <input type="number" class="form-control" name="pay_date" id="pay_date" placeholder="Оплата">-->
+<!--            </div>-->
 
             <!-- Submit button -->
             <button type="submit" class="btn btn-primary">Отправить</button>

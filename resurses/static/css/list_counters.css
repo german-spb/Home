@@ -3,6 +3,7 @@ table {
     font-family: 'Open Sans', sans-serif;
     font-weight: bold;
     margin: auto;
+
 }
 
 th {
@@ -48,6 +49,3 @@ td:nth-child(2){
     background: #547f71;
 }
 
-#id_pay_date {
-    width: 70px;
-}
