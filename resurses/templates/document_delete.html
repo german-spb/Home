@@ -15,8 +15,8 @@
                 <h4>Вы уверены, что хотите удалить эту запись: <br>"{{ file.title }}" ?</h4>
             </fieldset>
             <div class="form-group">
-                <a class="btn btn-outline-danger" style='color:red;' href="{% url 'document_delete' file.id %}">Да, хочу удалить</a>&nbsp;&nbsp;&nbsp;
-                <a class="btn btn-outline-secondary" href="{% url 'german' %}">Отмена</a>
+                <a class="btn btn-outline-danger" style='color:red;' href="{% url 'document_home_delete' file.id %}">Да, хочу удалить</a>&nbsp;&nbsp;&nbsp;
+                <a class="btn btn-outline-secondary" href="{% url 'documents_home' %}">Отмена</a>
             </div>
 
 

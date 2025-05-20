@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.forms.models import ModelForm
-from resurses.models import Counters, Document, PayData
+from resurses.models import Counters, Document, PayData, Book
 
 
 class LoginForm(forms.Form):
@@ -43,6 +43,17 @@ class DocumentForm(forms.ModelForm):
             'title': 'Название документа',
             'owner': 'Собственник документа'
         }
+
+class BookForm(forms.ModelForm):
+    class Meta:
+        model = Book
+        fields = ('title', 'cover', 'book')
+        labels = {
+            'title': 'Название',
+            'cover': 'Обложка',
+            'book': 'Файл',
+        }
+
 
 class PayDataForm(forms.ModelForm):
     class Meta:

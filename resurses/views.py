@@ -5,11 +5,12 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, PayDataForm
+from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, PayDataForm, BookForm
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 import datetime
+
 
 
 
@@ -34,6 +35,20 @@ def documents(request):
         form = DocumentForm()
         return render(request, 'documents.html', {'form': form, 'owner': owner})
 
+def delete_document_home(request, file_id):
+    file = Document.objects.get(id=file_id)
+    return render(request, 'document_delete.html', {'file': file})
+
+def document_delete_home_confirm(request, file_id):
+    Document.objects.get(id=file_id).delete()
+    return redirect('/documents/')
+
+
+def document_view(request, file_id):
+    file_record = Document.objects.get(id=file_id)
+    return render(request, 'view.html', {'file_record' : file_record})
+
+# ==================================Герман =============================================================================
 def documents_german_upload(request):
     owner = Document.objects.filter(owner='Герман')
     if request.method == 'POST':
@@ -46,19 +61,16 @@ def documents_german_upload(request):
         form = DocumentForm()
     return render(request, 'documents_german.html', {'form': form, 'owner': owner})
 
-def document_view(request, file_id):
-    file_record = Document.objects.get(id=file_id)
-    return render(request, 'view.html', {'file_record' : file_record})
 
-def document_delete(request, file_id):
+def document_delete_german_confirm(request, file_id):
     Document.objects.get(id=file_id).delete()
-    return redirect('/documents/')
+    return redirect('/documents_german/')
 
-def delete(request, file_id):
+def delete_document_german(request, file_id):
     file = Document.objects.get(id=file_id)
-    return render(request, 'document_delete.html', {'file': file})
+    return render(request, 'document_delete_german.html', {'file': file})
 
-
+# ==================================Ирина===============================================================================
 def documents_irina_upload(request):
     owner = Document.objects.filter(owner='Ирина')
     if request.method == 'POST':
@@ -71,6 +83,15 @@ def documents_irina_upload(request):
         form = DocumentForm()
     return render(request, 'documents_irina.html', {'form': form, 'owner': owner})
 
+def delete_document_irina(request, file_id):
+    file = Document.objects.get(id=file_id)
+    return render(request, 'document_delete_irina.html', {'file': file})
+
+def document_delete_irina_confirm(request, file_id):
+    Document.objects.get(id=file_id).delete()
+    return redirect('/documents_irina/')
+
+# ===================================Марк===============================================================================
 def documents_mark_upload(request):
     owner = Document.objects.filter(owner='Марк')
     if request.method == 'POST':
@@ -83,12 +104,49 @@ def documents_mark_upload(request):
         form = DocumentForm()
     return render(request, 'documents_mark.html', {'form': form, 'owner': owner})
 
+def delete_document_mark(request, file_id):
+    file = Document.objects.get(id=file_id)
+    return render(request, 'document_delete_mark.html', {'file': file})
 
-# def view_documents(request):
-#     # owner = request.POST.get('owner')
-#     documents_obj = Document.objects.all()
-#     return render(request, 'documents.html', {'documents_obj': documents_obj})
-#
+def document_delete_mark_confirm(request, file_id):
+    Document.objects.get(id=file_id).delete()
+    return redirect('/documents_mark/')
+
+
+# ================================== Библиотека =======================================================================
+def book_upload(request):
+    books = Book.objects.all()
+    if request.method == 'POST':
+        form = BookForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            img_obj = form.instance
+            return render(request, 'books.html', {'form': form, 'img_obj': img_obj, 'books': books})
+    else:
+        form = BookForm()
+    return render(request, 'books.html', {'form': form, 'books': books})
+
+
+def delete_book(request, file_id):
+    file = Book.objects.get(id=file_id)
+    return render(request, 'book_delete.html', {'file': file})
+
+def delete_book_confirm(request, file_id):
+    Book.objects.get(id=file_id).delete()
+    return redirect('/book/')
+
+def download_book(request, filename):
+    file_path = os.path.join(settings.STATIC_ROOT, 'files', filename)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as file:
+            response = FileResponse(file)
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            return response
+    else:
+        return HttpResponse("File not found", status=404)
+
+
+
 
 def login_page(request):
     # Check if the HTTP request method is POST (form submission)
@@ -160,7 +218,7 @@ def logout_view(request):
 #     form = CountersForm()
 #     return render(request, 'input_date.html', {'form': form})
 
-# --------- Запись данных в БД из формы-----------------
+# ===========================Запись данных в БД из формы===============================================================
 class SuccessView(TemplateView):
     template_name = 'success.html'
 
@@ -204,7 +262,7 @@ class CountersFormView(FormView):
         return super().form_invalid(form)
 
 
-# -------------- извлечение из БД --------------
+# -------------- извлечение из БД --------------------------------------------------------------
 def list_counters(request):
     counters = Counters.objects.order_by('year')
     data_pay = PayData.objects.all()
@@ -229,7 +287,3 @@ def delete_documents(request):
     return HttpResponse('Все файлы удалены')
 
 
-# def pay_data_input(request):
-#     context = {}
-#     context['form'] = PayDataForm()
-#     return render(request, 'list_counters.html', context)

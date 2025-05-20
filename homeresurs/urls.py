@@ -14,6 +14,8 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from tkinter.font import names
+
 from django.contrib import admin
 from django.urls import path
 from resurses import views
@@ -22,29 +24,48 @@ from django.conf.urls.static import static
 from resurses.views import CountersFormView, SuccessView
 
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', views.home),
     path('counters/', views.counters),
-    path('documents/', views.documents),
+
+    path('documents/', views.documents, name='documents_home'),
     path('documents/<int:file_id>/', views.document_view),
-    path('documents_german/', views.documents_german_upload, name='german'),
+    path('documents_home_delete/<int:file_id>/', views.delete_document_home, name='delete_home'),
+    path('documents_home_delete_confirm/<int:file_id>/', views.document_delete_home_confirm, name='document_home_delete'),
+
     path('documents_german/<int:file_id>/', views.document_view),
+    path('documents_german/', views.documents_german_upload, name='documents_german'),
+    path('documents_german_delete/<int:file_id>/', views.delete_document_german, name='delete_german'),
+    path('documents_german_delete_confirm/<int:file_id>/', views.document_delete_german_confirm, name='document_german_delete'),
+
     path('documents_irina/<int:file_id>/', views.document_view),
-    path('documents_german_delete/<int:file_id>/', views.document_delete, name='document_delete'),
-    path('documents_irina/', views.documents_irina_upload),
-    path('documents_mark/', views.documents_mark_upload),
+    path('documents_irina/', views.documents_irina_upload, name='documents_irina'),
+    path('documents_irina_delete/<int:file_id>/', views.delete_document_irina, name='delete_irina'),
+    path('documents_irina_delete_confirm/<int:file_id>/', views.document_delete_irina_confirm, name='document_irina_delete'),
+
+    path('documents_mark/', views.documents_mark_upload, name='documents_mark'),
     path('documents_mark/<int:file_id>/', views.document_view),
+    path('documents_mark_delete/<int:file_id>/', views.delete_document_mark, name='delete_mark'),
+    path('documents_mark_delete_confirm/<int:file_id>/', views.document_delete_mark_confirm, name='document_mark_delete'),
+
     path('login/', views.login_page, name='login'),
     path('register/', views.register_page, name='register'),
     path('logout/', views.logout_view, name='logout'),
     path('input_date/', CountersFormView.as_view(), name='input_date'),
     path('success/', SuccessView.as_view(), name='success'),
+
     path('list_counters/', views.list_counters),
-    path('list_counters/list_counters_date_pay/', views.create_data_pay),
-    path('delete_all/', views.all_delete),
-    path('delete_documents/', views.delete_documents),
-    path('delete/<int:file_id>/', views.delete, name='delete'),
+    path('delete_all/', views.all_delete, name='delete_all_counters'),
+
+    path('delete_documents/', views.delete_documents, name='delete_all_documents'),
+
+    path('book/', views.book_upload, name= 'book'),
+    path('delete_book/<int:file_id>/', views.delete_book, name='delete_book_confirm'),
+    path('delete_book_confirm/<int:file_id>/', views.delete_book_confirm, name='delete_book'),
+    path('download/', views.download_book, name='download')
+
 
 ]
 if settings.DEBUG:

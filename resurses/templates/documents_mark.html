@@ -33,7 +33,7 @@
                     <td>{{ image.title }}</td>
                     <td><img src = "{{ image.document.url }}" alt="{{ image.title }}" width="100"></td>
                     <td><a href="{{ image.id }}">Открыть</a></td>
-                    <td><a href="{% url 'delete' image.id %}">Удалить</a></td>
+                    <td><a href="{% url 'delete_mark' image.id %}">Удалить</a></td>
                 </tr>
             {% endfor %}
             </tbody>

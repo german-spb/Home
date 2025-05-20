@@ -30,3 +30,12 @@ class Document(models.Model):
 
 class PayData(models.Model):
     pay_date = models.DateField()
+
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    cover = models.ImageField(upload_to='images/')
+    book = models.FileField(upload_to='books/')
+
+    def __str__(self):
+        return self.title
