@@ -24,7 +24,7 @@
             {% for b in books %}
                 <tr>
                     <td>{{ b.title }}</td>
-                    <td><img src = "{{ b.cover.url }}" alt="{{ b.title }}" width="50"></td>
+                    <td><img src = "{{ b.cover.url }}" alt="{{ b.title }}" width="60"></td>
                     <td><a href="{{ b.book.url }}">Загрузить</a></td>
                     <td><a href="{% url 'delete_book_confirm' b.id %}">Удалить</a></td>
                 </tr>

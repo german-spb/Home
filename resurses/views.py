@@ -35,20 +35,23 @@ def documents(request):
         form = DocumentForm()
         return render(request, 'documents.html', {'form': form, 'owner': owner})
 
+@login_required
 def delete_document_home(request, file_id):
     file = Document.objects.get(id=file_id)
     return render(request, 'document_delete.html', {'file': file})
 
+@login_required
 def document_delete_home_confirm(request, file_id):
     Document.objects.get(id=file_id).delete()
     return redirect('/documents/')
 
-
+@login_required
 def document_view(request, file_id):
     file_record = Document.objects.get(id=file_id)
     return render(request, 'view.html', {'file_record' : file_record})
 
 # ==================================Герман =============================================================================
+@login_required
 def documents_german_upload(request):
     owner = Document.objects.filter(owner='Герман')
     if request.method == 'POST':
@@ -61,16 +64,17 @@ def documents_german_upload(request):
         form = DocumentForm()
     return render(request, 'documents_german.html', {'form': form, 'owner': owner})
 
-
+@login_required
 def document_delete_german_confirm(request, file_id):
     Document.objects.get(id=file_id).delete()
     return redirect('/documents_german/')
-
+@login_required
 def delete_document_german(request, file_id):
     file = Document.objects.get(id=file_id)
     return render(request, 'document_delete_german.html', {'file': file})
 
 # ==================================Ирина===============================================================================
+@login_required
 def documents_irina_upload(request):
     owner = Document.objects.filter(owner='Ирина')
     if request.method == 'POST':
@@ -83,15 +87,17 @@ def documents_irina_upload(request):
         form = DocumentForm()
     return render(request, 'documents_irina.html', {'form': form, 'owner': owner})
 
+@login_required
 def delete_document_irina(request, file_id):
     file = Document.objects.get(id=file_id)
     return render(request, 'document_delete_irina.html', {'file': file})
-
+@login_required
 def document_delete_irina_confirm(request, file_id):
     Document.objects.get(id=file_id).delete()
     return redirect('/documents_irina/')
 
 # ===================================Марк===============================================================================
+@login_required
 def documents_mark_upload(request):
     owner = Document.objects.filter(owner='Марк')
     if request.method == 'POST':
@@ -104,16 +110,19 @@ def documents_mark_upload(request):
         form = DocumentForm()
     return render(request, 'documents_mark.html', {'form': form, 'owner': owner})
 
+@login_required
 def delete_document_mark(request, file_id):
     file = Document.objects.get(id=file_id)
     return render(request, 'document_delete_mark.html', {'file': file})
 
+@login_required
 def document_delete_mark_confirm(request, file_id):
     Document.objects.get(id=file_id).delete()
     return redirect('/documents_mark/')
 
 
 # ================================== Библиотека =======================================================================
+@login_required
 def book_upload(request):
     books = Book.objects.all()
     if request.method == 'POST':
@@ -126,15 +135,17 @@ def book_upload(request):
         form = BookForm()
     return render(request, 'books.html', {'form': form, 'books': books})
 
-
+@login_required
 def delete_book(request, file_id):
     file = Book.objects.get(id=file_id)
     return render(request, 'book_delete.html', {'file': file})
 
+@login_required
 def delete_book_confirm(request, file_id):
     Book.objects.get(id=file_id).delete()
     return redirect('/book/')
 
+@login_required
 def download_book(request, filename):
     file_path = os.path.join(settings.STATIC_ROOT, 'files', filename)
     if os.path.exists(file_path):
@@ -170,7 +181,7 @@ def login_page(request):
         else:
             # Log in the user and redirect to the home page upon successful login
             login(request, user)
-            return redirect('/home/')
+            return redirect('home')
 
     # Render the login page template (GET request)
     return render(request, 'login.html')
@@ -270,18 +281,14 @@ def list_counters(request):
     print(data_pay)
     return render(request, 'list_counters.html', {'counters': counters, 'form': form, 'data': data_pay})
 
-def create_data_pay(request):
-    data_pay = request.POST.get('pay_date')
-    date = PayData(pay_date=data_pay)
-    date.save()
-    print(date.datetime.time)
-    return HttpResponse('Дата записана')
 
+@login_required
 def all_delete (request):
     Counters.objects.all().delete()
     return HttpResponse('Все записи удалены')
 
 # ------------ Удаление файлов------------------
+@login_required
 def delete_documents(request):
     Document.objects.all().delete()
     return HttpResponse('Все файлы удалены')

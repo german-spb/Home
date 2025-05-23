@@ -27,7 +27,7 @@ from resurses.views import CountersFormView, SuccessView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('home/', views.home),
+    path('', views.home, name='home'),
     path('counters/', views.counters),
 
     path('documents/', views.documents, name='documents_home'),
