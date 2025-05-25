@@ -1,14 +1,16 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, FileResponse
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .models import *
-from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, PayDataForm, BookForm
+from .forms import LoginForm, RegisterForm, CountersForm, DocumentForm, BookForm
 from django.views.generic.edit import FormView, CreateView
 from django.views.generic import TemplateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
+import os
+from django.conf import settings
 import datetime
 
 
@@ -157,8 +159,7 @@ def download_book(request, filename):
         return HttpResponse("File not found", status=404)
 
 
-
-
+# ================= Регистрация / Авторизация ======================================================
 def login_page(request):
     # Check if the HTTP request method is POST (form submission)
     if request.method == "POST":
@@ -277,9 +278,7 @@ class CountersFormView(FormView):
 def list_counters(request):
     counters = Counters.objects.order_by('year')
     data_pay = PayData.objects.all()
-    form = PayDataForm()
-    print(data_pay)
-    return render(request, 'list_counters.html', {'counters': counters, 'form': form, 'data': data_pay})
+    return render(request, 'list_counters.html', {'counters': counters})
 
 
 @login_required
