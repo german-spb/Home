@@ -15,9 +15,9 @@ class Counters(models.Model):
     outgo_gas = models.IntegerField(null=True, blank=True)
 
 
-
     class Meta:
         unique_together = ('year', 'month')
+        ordering = ('id',)
 
 
 class Document(models.Model):
