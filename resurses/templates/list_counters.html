@@ -11,7 +11,7 @@
     <nav class="top-menu">
       <ul class="menu-main">
         <li><a href="/input_date" class="current">Внести показания</a></li>
-        <li><a href="/change_counters">Изменить запись</a></li>
+<!--        <li><a href="/change_counters">Изменить запись</a></li>-->
         <li><a href="/list_counters">Вывести отчет</a></li>
         <li><a href="/">В начало</a></li>
       </ul>
@@ -46,7 +46,7 @@
                     <td class="out">{{ coun.outgo_water }}</td>
                     <td>{{ coun.gas }}</td>
                     <td class="out">{{ coun.outgo_gas }}</td>
-                    <td><a href="glue_edit/{{glue.id}}">Изменить</a></td>
+                    <td><a href="counters_edit/{{coun.id}}">Изм.</a></td>
                 </tr>
                 {% endfor %}
 

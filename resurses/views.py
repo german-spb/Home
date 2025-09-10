@@ -1,4 +1,4 @@
-from django.http import HttpResponse, FileResponse
+from django.http import HttpResponse, FileResponse, HttpResponseNotFound
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -276,7 +276,7 @@ class CountersFormView(FormView):
 
 # -------------- извлечение из БД --------------------------------------------------------------
 def list_counters(request):
-    counters = Counters.objects.order_by('year')
+    counters = Counters.objects.order_by('id')
     data_pay = PayData.objects.all()
     return render(request, 'list_counters.html', {'counters': counters})
 
@@ -285,6 +285,28 @@ def list_counters(request):
 def all_delete (request):
     Counters.objects.all().delete()
     return HttpResponse('Все записи удалены')
+
+def counters_edit(request, id):
+    try:
+        counter = Counters.objects.get(id=id)
+        prev_obj = Counters.objects.order_by('id').filter(id__lt=counter.id).first()
+        if request.method == "POST":
+            counter.year = request.POST.get("year")
+            counter.month = request.POST.get("month")
+            counter.elec_day = request.POST.get("elec_day")
+            counter.outgo_elec_day = int(counter.elec_day) - int(prev_obj.elec_day)
+            counter.elec_night = request.POST.get("elec_night")
+            counter.outgo_elec_night = int(counter.elec_night) - int(prev_obj.elec_night)
+            counter.water = request.POST.get("water")
+            counter.outgo_water = int(counter.water) - int(prev_obj.water)
+            counter.gas = request.POST.get("gas")
+            counter.outgo_gas = int(counter.gas) - int(prev_obj.gas)
+            counter.save()
+            return redirect('counters')
+        else:
+            return render(request, "counters_edit.html", {"counter": counter})
+    except Counters.DoesNotExist:
+        return HttpResponseNotFound("<h2>Абонент!</h2>")
 
 # ------------ Удаление файлов------------------
 @login_required

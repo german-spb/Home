@@ -17,7 +17,7 @@ class Counters(models.Model):
 
     class Meta:
         unique_together = ('year', 'month')
-        ordering = ('id',)
+        ordering = ['id']
 
 
 class Document(models.Model):

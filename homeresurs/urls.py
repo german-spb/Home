@@ -22,7 +22,7 @@ from resurses import views
 from django.conf import settings
 from django.conf.urls.static import static
 from resurses.views import CountersFormView, SuccessView
-from tkinter import *
+# from tkinter import *
 
 
 
@@ -50,6 +50,7 @@ urlpatterns = [
     path('documents_mark/<int:file_id>/', views.document_view),
     path('documents_mark_delete/<int:file_id>/', views.delete_document_mark, name='delete_mark'),
     path('documents_mark_delete_confirm/<int:file_id>/', views.document_delete_mark_confirm, name='document_mark_delete'),
+    path('delete_documents/', views.delete_documents, name='delete_all_documents'),
 
     path('login/', views.login_page, name='login'),
     path('register/', views.register_page, name='register'),
@@ -57,10 +58,11 @@ urlpatterns = [
     path('input_date/', CountersFormView.as_view(), name='input_date'),
     path('success/', SuccessView.as_view(), name='success'),
 
-    path('list_counters/', views.list_counters),
+    path('list_counters/', views.list_counters, name='counters'),
     path('delete_all/', views.all_delete, name='delete_all_counters'),
+    path('list_counters/counters_edit/<int:id>/', views.counters_edit),
 
-    path('delete_documents/', views.delete_documents, name='delete_all_documents'),
+
 
     path('book/', views.book_upload, name= 'book'),
     path('delete_book/<int:file_id>/', views.delete_book, name='delete_book_confirm'),

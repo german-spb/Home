@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование показаний</title>
+</head>
+<body>
+    <form method="POST">
+        {% csrf_token %}
+        <p>
+            <label>Год</label><br>
+            <input type="text" name="year" value="{{counter.year}}" />
+        </p>
+        <p>
+            <label>Месяц</label><br>
+            <input type="text" name="month" value="{{counter.month}}" />
+        </p>
+         <p>
+            <label>День</label><br>
+            <input type="text" name="elec_day" value="{{counter.elec_day}}" />
+        </p>
+        <p>
+            <label>Ночь</label><br>
+            <input type="text" name="elec_night" value="{{counter.elec_night}}" />
+        </p>
+         <p>
+            <label>Вода</label><br>
+            <input type="text" name="water" value="{{counter.water}}" />
+        </p>
+         <p>
+            <label>Газ</label><br>
+            <input type="text" name="gas" value="{{counter.gas}}" />
+        </p>
+        <input type="submit" value="Сохранить" >
+    </form>
+</body>
+</html>
